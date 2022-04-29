@@ -4,8 +4,8 @@ from pyecharts.charts import Map
 cn_to_eng = {}
 data = []
 
-with open('data/worldmap/country-cn.txt', 'r', encoding='utf-8') as cn:
-    with open('data/worldmap/country-eng.txt', 'r', encoding='utf-8') as eng:
+with open('country-cn.txt', 'r', encoding='utf-8') as cn:
+    with open('country-eng.txt', 'r', encoding='utf-8') as eng:
         while True:
             line_cn = cn.readline()
             line_eng = eng.readline()
@@ -17,11 +17,8 @@ with open('data/worldmap/country-cn.txt', 'r', encoding='utf-8') as cn:
                 cn_to_eng[country_cn] = country_eng
 
 
-#for key, value in cn_to_eng.items():
-#    print("\'{}\' ".format(key), end='')
 
-
-with open('data/worldmap/fdns-global-geo-stat.txt', 'r', encoding='utf-8') as f:
+with open('data/worldmap/example.txt', 'r', encoding='utf-8') as f:
     max_cnt = 0
     while True:
         line = f.readline()
@@ -29,8 +26,6 @@ with open('data/worldmap/fdns-global-geo-stat.txt', 'r', encoding='utf-8') as f:
             break
         country = line.split(' ')[0]
         cnt = int(line.split(' ')[1][:-1])
-        if country == "中国":
-            cnt = 0
         if cnt > max_cnt:
             max_cnt = cnt
         data.append([cn_to_eng[country], cnt])
@@ -39,7 +34,7 @@ with open('data/worldmap/fdns-global-geo-stat.txt', 'r', encoding='utf-8') as f:
 #print(data)
 
 worldMap = Map()
-worldMap.add("转发DNS分布", data, "world", is_map_symbol_show=False)
+worldMap.add("示例", data, "world", is_map_symbol_show=False)
 worldMap.set_series_opts(label_opts=opts.LabelOpts(is_show=False))
 worldMap.set_global_opts(visualmap_opts=opts.VisualMapOpts(max_=max_cnt))
-worldMap.render(path="data/output/转发DNS分布-全球.html")
+worldMap.render(path="data/output/全球.html")
